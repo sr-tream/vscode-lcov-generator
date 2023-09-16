@@ -1,0 +1,4 @@
+**
+!*.md
+!out/bundle.js
+!package.json

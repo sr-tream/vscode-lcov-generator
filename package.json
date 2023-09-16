@@ -1,0 +1,91 @@
+{
+    "name": "gcov-viewer-cmake",
+    "displayName": "Gcov viewer cmake",
+    "description": "Integrate Gcov Viewer with CMake",
+    "version": "0.0.1",
+    "publisher": "sr-team",
+    "license": "MIT",
+    "engines": {
+        "vscode": "^1.70.0"
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/sr-tream/gcov-viewer-cmake"
+    },
+    "bugs": {
+      "url": "https://github.com/sr-tream/gcov-viewer-cmake/issues"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "keywords": [
+        "C",
+        "C++",
+        "gcc",
+        "g++",
+        "gcov",
+        "coverage"
+    ],
+    "activationEvents": [
+        "onLanguage:c",
+        "onLanguage:cpp",
+        "onLanguage:cuda-cpp",
+        "onLanguage:objective-c",
+        "onLanguage:objective-cpp",
+        "onLanguage:cmake",
+        "onCommand:gcov-viewer.show",
+        "onCommand:gcov-viewer.toggle",
+        "onCommand:gcov-viewer.reloadGcdaFiles",
+        "onCommand:clangd.activate",
+        "onCommand:clangd.install",
+        "onCommand:clangd.update",
+        "onCommand:cmake.activeFolderName",
+        "onCommand:cmake.activeFolderPath",
+        "onCommand:cmake.activeConfigurePresetName",
+        "onCommand:cmake.activeBuildPresetName",
+        "onCommand:cmake.activeTestPresetName",
+        "onCommand:cmake.buildTargetName",
+        "onCommand:cmake.launchTargetPath",
+        "onCommand:cmake.launchTargetDirectory",
+        "onCommand:cmake.launchTargetFilename",
+        "onCommand:cmake.getLaunchTargetPath",
+        "onCommand:cmake.getLaunchTargetDirectory",
+        "onCommand:cmake.getLaunchTargetFilename",
+        "onCommand:cmake.buildType",
+        "onCommand:cmake.buildDirectory",
+        "onCommand:cmake.executableTargets",
+        "onCommand:cmake.buildKit",
+        "onCommand:cmake.tasksBuildCommand",
+        "workspaceContains:CMakeLists.txt",
+        "workspaceContains:*/CMakeLists.txt",
+        "workspaceContains:*/*/CMakeLists.txt",
+        "workspaceContains:*/*/*/CMakeLists.txt",
+        "workspaceContains:.vscode/cmake-kits.json"
+    ],
+    "main": "./out/bundle",
+    "scripts": {
+        "esbuild": "esbuild ./src/extension.ts --bundle --outfile=out/bundle.js --external:vscode --format=cjs --platform=node",
+        "vscode:prepublish": "npm run check-ts && npm run esbuild -- --minify --keep-names",
+        "compile": "npm run esbuild -- --sourcemap",
+        "check-ts": "tsc -noEmit -p ./",
+        "format": "clang-format -i --glob=\"src/*.ts\"",
+        "test": "tsc -p ./ && node ./out/test/index.js",
+        "package": "vsce package",
+        "git-clang-format": "git-clang-format --extensions=ts"
+    },
+    "devDependencies": {
+        "@types/glob": "^7.1.1",
+        "@types/mocha": "^7.0.2",
+        "@types/node": "^6.0.40",
+        "@types/vscode": "1.70.0",
+        "clang-format": "^1.7.0",
+        "esbuild": "^0.14.13",
+        "glob": "^7.1.4",
+        "mocha": "^9.2.0",
+        "ovsx": "^0.8.3",
+        "typescript": "^4.5.5",
+        "vsce": "^2.15.0",
+        "vscode-cmake-tools": "^1.0.0",
+        "vscode-test": "^1.3.0"
+    }
+}
