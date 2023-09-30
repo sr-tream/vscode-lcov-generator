@@ -2,7 +2,7 @@
     "name": "gcov-viewer-cmake",
     "displayName": "Gcov viewer cmake",
     "description": "Integrate Gcov Viewer with CMake",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "publisher": "sr-team",
     "license": "MIT",
     "engines": {
@@ -61,6 +61,10 @@
         "workspaceContains:*/*/CMakeLists.txt",
         "workspaceContains:*/*/*/CMakeLists.txt",
         "workspaceContains:.vscode/cmake-kits.json"
+    ],
+    "extensionDependencies": [
+        "ms-vscode.cmake-tools",
+        "JacquesLucke.gcov-viewer"
     ],
     "main": "./out/bundle",
     "scripts": {
