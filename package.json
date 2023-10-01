@@ -1,8 +1,8 @@
 {
-    "name": "gcov-viewer-cmake",
-    "displayName": "Gcov viewer cmake",
-    "description": "Integrate Gcov Viewer with CMake",
-    "version": "0.0.2",
+    "name": "lcov-generator",
+    "displayName": "Lcov Generator",
+    "description": "Generate lcov from profraw/gcda files",
+    "version": "0.0.1",
     "publisher": "sr-team",
     "license": "MIT",
     "engines": {
@@ -10,10 +10,10 @@
     },
     "repository": {
       "type": "git",
-      "url": "https://github.com/sr-tream/gcov-viewer-cmake"
+      "url": "https://github.com/sr-tream/lcov-generator"
     },
     "bugs": {
-      "url": "https://github.com/sr-tream/gcov-viewer-cmake/issues"
+      "url": "https://github.com/sr-tream/lcov-generator/issues"
     },
     "categories": [
         "Programming Languages"
@@ -21,59 +21,78 @@
     "keywords": [
         "C",
         "C++",
+        "clang",
+        "clang++",
         "gcc",
         "g++",
+        "lcov",
         "gcov",
-        "coverage"
+        "coverage",
+        "profraw",
+        "gcda",
+        "gcno"
     ],
     "activationEvents": [
-        "onLanguage:c",
-        "onLanguage:cpp",
-        "onLanguage:cuda-cpp",
-        "onLanguage:objective-c",
-        "onLanguage:objective-cpp",
-        "onLanguage:cmake",
-        "onCommand:gcov-viewer.show",
-        "onCommand:gcov-viewer.toggle",
-        "onCommand:gcov-viewer.reloadGcdaFiles",
-        "onCommand:clangd.activate",
-        "onCommand:clangd.install",
-        "onCommand:clangd.update",
-        "onCommand:cmake.activeFolderName",
-        "onCommand:cmake.activeFolderPath",
-        "onCommand:cmake.activeConfigurePresetName",
-        "onCommand:cmake.activeBuildPresetName",
-        "onCommand:cmake.activeTestPresetName",
-        "onCommand:cmake.buildTargetName",
-        "onCommand:cmake.launchTargetPath",
-        "onCommand:cmake.launchTargetDirectory",
-        "onCommand:cmake.launchTargetFilename",
-        "onCommand:cmake.getLaunchTargetPath",
-        "onCommand:cmake.getLaunchTargetDirectory",
-        "onCommand:cmake.getLaunchTargetFilename",
-        "onCommand:cmake.buildType",
-        "onCommand:cmake.buildDirectory",
-        "onCommand:cmake.executableTargets",
-        "onCommand:cmake.buildKit",
-        "onCommand:cmake.tasksBuildCommand",
-        "workspaceContains:CMakeLists.txt",
-        "workspaceContains:*/CMakeLists.txt",
-        "workspaceContains:*/*/CMakeLists.txt",
-        "workspaceContains:*/*/*/CMakeLists.txt",
-        "workspaceContains:.vscode/cmake-kits.json"
+        "onStartupFinished"
     ],
-    "extensionDependencies": [
-        "ms-vscode.cmake-tools",
-        "JacquesLucke.gcov-viewer"
-    ],
+    "contributes":{
+        "configuration": {
+            "type": "object",
+            "title": "Lcov Generator configuration",
+            "properties": {
+                "lcov-generator.llvmProfdata": {
+                    "type": "string",
+                    "default": "llvm-profdata",
+                    "description": "The path to llvm-profdata"
+                },
+                "lcov-generator.llvmCov": {
+                    "type": "string",
+                    "default": "llvm-cov",
+                    "description": "The path to llvm-cov"
+                },
+                "lcov-generator.lcov": {
+                    "type": "string",
+                    "default": "lcov",
+                    "description": "The path to lcov"
+                },
+                "lcov-generator.profrawExt": {
+                    "type": "string",
+                    "default": "profraw",
+                    "description": "The extension of profraw files"
+                },
+                "lcov-generator.copyLcovTo": {
+                    "type": "string",
+                    "default": "",
+                    "description": "The path to copy lcov file. For multiple artifacts, lcov files are merged.\nWhen empty, lcov file stored in folder with artifact."
+                },
+                "lcov-generator.watchedFolders": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "cwd":{
+                                "type": "string",
+                                "description": "The current working directory for artifact"
+                            },
+                            "program": {
+                                "type": "string",
+                                "description": "The path to artifact"
+                            }
+                        },
+                        "required": ["program"]
+                    }
+                }
+            }
+        }
+    },
     "main": "./out/bundle",
     "scripts": {
         "esbuild": "esbuild ./src/extension.ts --bundle --outfile=out/bundle.js --external:vscode --format=cjs --platform=node",
         "vscode:prepublish": "npm run check-ts && npm run esbuild -- --minify --keep-names",
         "compile": "npm run esbuild -- --sourcemap",
+        "watch": "npm run esbuild -- --sourcemap --watch",
         "check-ts": "tsc -noEmit -p ./",
         "format": "clang-format -i --glob=\"src/*.ts\"",
-        "test": "tsc -p ./ && node ./out/test/index.js",
         "package": "vsce package",
         "git-clang-format": "git-clang-format --extensions=ts"
     },
