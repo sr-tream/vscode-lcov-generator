@@ -10,10 +10,10 @@
     },
     "repository": {
       "type": "git",
-      "url": "https://github.com/sr-tream/lcov-generator"
+      "url": "https://github.com/sr-tream/vscode-lcov-generator"
     },
     "bugs": {
-      "url": "https://github.com/sr-tream/lcov-generator/issues"
+      "url": "https://github.com/sr-tream/vscode-lcov-generator/issues"
     },
     "categories": [
         "Programming Languages"
