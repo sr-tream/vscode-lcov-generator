@@ -2,7 +2,7 @@
     "name": "lcov-generator",
     "displayName": "Lcov Generator",
     "description": "Generate lcov from profraw/gcda files",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "publisher": "sr-team",
     "license": "MIT",
     "engines": {
