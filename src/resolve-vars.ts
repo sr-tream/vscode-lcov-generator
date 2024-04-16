@@ -1,5 +1,7 @@
 import * as vscode from 'vscode';
 
+const CMAKE_LAUNCH_COMMANDS_PREFIX = 'cmake.launch';
+
 /**
  * Resolves variables in a string.
  * @details Very simple function to resolve workspace directory and expand
@@ -24,6 +26,10 @@ export async function resolveVariablesInString(input: string): Promise<string> {
 
         if (variable.startsWith('command:')) {
           const command = variable.slice('command:'.length);
+          if (command.startsWith(CMAKE_LAUNCH_COMMANDS_PREFIX))
+            return await vscode.commands.executeCommand(command.replace(
+                CMAKE_LAUNCH_COMMANDS_PREFIX, 'cmake.getLaunch'));
+
           return await vscode.commands.executeCommand(command);
         } else {
           switch (variable) {
