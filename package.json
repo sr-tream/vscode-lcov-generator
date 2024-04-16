@@ -88,12 +88,12 @@
     "main": "./out/bundle",
     "scripts": {
         "esbuild": "esbuild ./src/extension.ts --bundle --outfile=out/bundle.js --external:vscode --format=cjs --platform=node",
-        "vscode:prepublish": "npm run check-ts && npm run esbuild -- --minify --keep-names",
+        "vscode:prepublish": "npm run format && npm run check-ts && npm run esbuild -- --minify --keep-names",
         "compile": "npm run esbuild -- --sourcemap",
         "watch": "npm run esbuild -- --sourcemap --watch",
         "check-ts": "tsc -noEmit -p ./",
         "format": "clang-format -i --glob=\"src/*.ts\"",
-        "package": "vsce package",
+        "package": "npm run vscode:prepublish && vsce package",
         "git-clang-format": "git-clang-format --extensions=ts"
     },
     "devDependencies": {
